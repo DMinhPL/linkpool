@@ -32,7 +32,7 @@ COPY packages/types/package.json ./packages/types/
 
 # Install everything needed to build
 RUN --mount=type=cache,sharing=locked,target=/root/.yarn/berry/cache \
-    yarn workspaces focus linkwarden @linkwarden/web @linkwarden/worker
+    yarn workspaces focus linkpool @linkwarden/web @linkwarden/worker
 
 # Copy source and build
 COPY . .
@@ -40,7 +40,7 @@ RUN yarn prisma:generate && \
     yarn web:build
 
 # Clean up dev dependencies right here before copying to the final stage
-RUN yarn workspaces focus --production linkwarden @linkwarden/web @linkwarden/worker && \
+RUN yarn workspaces focus --production linkpool @linkwarden/web @linkwarden/worker && \
     rm -rf apps/web/.next/cache && \
     yarn cache clean
 

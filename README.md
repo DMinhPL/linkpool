@@ -1,152 +1,151 @@
 <div align="center">
-  <img src="./assets/logo.png" width="100px" />
-  <h1>Linkwarden</h1>
-  <h3>Bookmarks, Evolved</h3>
+  <h1>LinkPool</h1>
+  <p>A self-hosted home for collecting, organizing, and preserving useful links.</p>
 
-<a href="https://trendshift.io/repositories/4006" target="_blank"><img src="https://trendshift.io/api/badge/repositories/4006" alt="linkwarden%2Flinkwarden | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
-
-<a href="https://discord.com/invite/CtuYV47nuJ"><img src="https://img.shields.io/discord/1117993124669702164?logo=discord&style=flat" alt="Discord"></a>
-<a href="https://twitter.com/LinkwardenHQ"><img src="https://img.shields.io/twitter/follow/linkwarden" alt="Twitter"></a> <a href="https://news.ycombinator.com/item?id=43856801"><img src="https://img.shields.io/badge/Hacker%20News-301-%23FF6600"></img></a>
-
-<a href="https://github.com/linkwarden/linkwarden/releases"><img alt="GitHub release" src="https://img.shields.io/github/v/release/linkwarden/linkwarden"></a>
-<a href="https://crowdin.com/project/linkwarden">
-<img src="https://badges.crowdin.net/linkwarden/localized.svg" alt="Crowdin" /></a>
-<a href="https://opencollective.com/linkwarden"><img src="https://img.shields.io/opencollective/all/linkwarden" alt="Open Collective"></a>
-
+  [![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-blue.svg)](./LICENSE.md)
+  [![Built on Linkwarden](https://img.shields.io/badge/built%20on-Linkwarden-5b5bd6)](https://github.com/linkwarden/linkwarden)
 </div>
 
-<div align='center'>
+## About
 
-[« LAUNCH DEMO »](https://demo.linkwarden.app)
+LinkPool is built on top of [Linkwarden](https://github.com/linkwarden/linkwarden), the open-source collaborative bookmark manager and web-archiving platform.
 
-[Cloud](https://cloud.linkwarden.app) · [Website](https://linkwarden.app) · [Self-Host](https://docs.linkwarden.app/self-hosting/installation) · [Docs](https://docs.linkwarden.app)
+It provides a single place to save, search, organize, and revisit webpages while preserving copies of their content. LinkPool currently retains Linkwarden's workspace package names and core architecture so that upstream improvements can be adopted more easily.
 
-<img src="./assets/linkwarden-hero.png" />
-
-</div>
-
-## Intro & motivation
-
-**Linkwarden is a self-hosted, open-source collaborative bookmark manager to collect, read, annotate, and fully preserve what matters, all in one place.**
-
-The objective is to organize useful webpages and articles you find across the web in one place, and since useful webpages can go away (see the inevitability of [Link Rot](https://en.wikipedia.org/wiki/Link_rot)), Linkwarden also saves a copy of each webpage as a Screenshot and PDF, ensuring accessibility even if the original content is no longer available.
-
-In addition to preservation, Linkwarden provides a user-friendly reading and annotation experience that blends the simplicity of a “read-it-later” tool with the reliability of a web archive. Whether you’re highlighting key ideas, jotting down thoughts, or revisiting content long after it’s disappeared from the web, Linkwarden keeps your knowledge accessible and organized.
-
-Linkwarden is also designed with collaboration in mind, enabling you to share links with the public and/or collaborate seamlessly with multiple users.
-
-> [!TIP]  
-> Our official [Cloud](https://linkwarden.app/#pricing) offering provides the simplest way to begin using Linkwarden and it's the preferred choice for many due to its time-saving benefits. <br> Your subscription supports our hosting infrastructure and ongoing development. <br> Alternatively, if you prefer self-hosting Linkwarden, you can do so by following our [Installation documentation](https://docs.linkwarden.app/self-hosting/installation).
+> [!IMPORTANT]
+> LinkPool is an independent project and is not affiliated with or endorsed by the Linkwarden project. For the original project, its hosted service, and upstream documentation, visit [linkwarden.app](https://linkwarden.app) and [docs.linkwarden.app](https://docs.linkwarden.app).
 
 ## Features
 
-- 📸 Auto capture a screenshot, PDF, and single html file of each webpage
-- 📖 Reader view of the webpage, with the ability to highlight and annotate text
-- 🏛️ Send your webpage to Wayback Machine ([archive.org](https://archive.org)) for a snapshot (optional)
-- ✨ Local AI Tagging to automatically tag your links based on their content (optional)
-- 📂 Organize links by collection, sub-collection, name, description and multiple tags
-- 👥 Collaborate on gathering links in a collection
-- 🎛️ Customize the permissions of each member
-- 🌐 Share your collected links and preserved formats with the world
-- 📱 Native iOS and android mobile apps
-- 🔍 Full text search, filter and sort for easy retrieval
-- 🌓 Dark/Light mode support
-- 🧩 Browser extension (star it [here](https://github.com/linkwarden/browser-extension)!)
-- 🔄 Browser Synchronization (using [Floccus](https://floccus.org)!)
-- ⬆️ Upload from SingleFile (check out the [guide](https://docs.linkwarden.app/Usage/upload-from-singlefile))
-- 🔐 SSO integration (Enterprise and Self-hosted users only)
-- 🍎 iOS Shortcut to save links to Linkwarden
-- 🔑 API keys
-- ✅ Bulk actions
-- 👥 User administration
-- 🌐 Support for other languages (i18n)
-- 📁 Image and PDF uploads
-- 🎨 Custom icons for links and collections
-- 🔔 RSS feed subscription
-- ✨ And many more features (literally!)
+- Save and organize links with collections, subcollections, descriptions, and tags
+- Preserve webpages as screenshots, PDFs, readable text, and single-file HTML
+- Search, filter, and sort saved content
+- Highlight and annotate archived articles
+- Share collections and collaborate with other users
+- Subscribe to RSS feeds
+- Import files and bookmarks
+- Use optional AI-assisted tagging
+- Configure SSO and other authentication providers
+- Run entirely on your own infrastructure
 
-## Get Our Official Mobile App
+Most of these capabilities come from Linkwarden. LinkPool-specific behavior and changes will be documented here as the project evolves.
 
-<img src="./assets/mobile_apps.png" alt="Different screens (iPad, Pixel, and iPhone)" width="400" />
+## Getting started
 
-> [!IMPORTANT]
-> To use the app you’ll first need a Linkwarden account.
+### Prerequisites
 
-To create an account, you can choose between:
+- Node.js 20 or newer
+- [Corepack](https://nodejs.org/api/corepack.html) with Yarn 4
+- Docker Desktop
+- PostgreSQL, either local or containerized
 
-- [**Linkwarden Cloud**](https://linkwarden.app/#pricing) – instant setup, and your subscription directly supports ongoing development.
-- [**Self-hosted Linkwarden**](https://docs.linkwarden.app/self-hosting/installation) – free, but you’ll need to deploy and maintain a Linkwarden instance on a server.
+### Local development
 
-After creating an account, download the app from your preferred store:
+1. Clone the repository and enter the project directory:
 
-[![Download on the App Store](./assets/app_store.png)](https://apps.apple.com/app/linkwarden/id6752550960)
-[![Get it on Google Play](./assets/google_play.png)](https://play.google.com/store/apps/details?id=app.linkwarden)
+   ```bash
+   git clone https://github.com/DMinhPL/linkpool.git
+   cd linkpool
+   ```
 
-(To get the app as an APK outside Google Play, check out our [builds](https://github.com/linkwarden/builds) repository.)
+2. Create your local environment file:
 
-## Like what we're doing? Give us a Star ⭐
+   ```bash
+   cp .env.sample .env
+   ```
 
-![Star Us](https://raw.githubusercontent.com/linkwarden/linkwarden/main/assets/star_repo.gif)
+3. Set at least `DATABASE_URL`, `NEXTAUTH_SECRET`, `NEXTAUTH_URL`, and `MEILI_MASTER_KEY` in `.env`.
 
-## We're building our Community 🌐
+4. Start Meilisearch and, if needed, the bundled PostgreSQL service:
 
-Join and follow us in the following platforms to stay up to date about the most recent features and for support:
+   ```bash
+   docker compose up -d meilisearch
+   docker compose up -d postgres
+   ```
 
-<a href="https://discord.com/invite/CtuYV47nuJ"><img src="https://img.shields.io/discord/1117993124669702164?logo=discord&style=flat" alt="Discord"></a>
+5. Install dependencies and prepare the database:
 
-<a href="https://twitter.com/LinkwardenHQ"><img src="https://img.shields.io/twitter/follow/linkwarden" alt="Twitter"></a>
+   ```bash
+   corepack enable
+   yarn install
+   yarn prisma:generate
+   yarn prisma:dev
+   ```
 
-<a href="https://fosstodon.org/@linkwarden"><img src="https://img.shields.io/mastodon/follow/110748840237143200?domain=https%3A%2F%2Ffosstodon.org" alt="Mastodon"></a>
+6. Start the web application and background worker:
 
-## Suggestions
+   ```bash
+   yarn concurrently:dev
+   ```
 
-We _usually_ go after the [popular suggestions](https://github.com/linkwarden/linkwarden/issues?q=is%3Aissue%20is%3Aopen%20sort%3Areactions-%2B1-desc). Feel free to open a [new issue](https://github.com/linkwarden/linkwarden/issues/new?assignees=&labels=enhancement&projects=&template=feature_request.md&title=) to suggest one - others might be interested too! :)
+Open [http://localhost:3000](http://localhost:3000) and create your first account. See [ONBOARDING.md](./ONBOARDING.md) for detailed setup notes and troubleshooting.
 
-## Roadmap
+### Docker
 
-Make sure to check out our [public roadmap](https://github.com/orgs/linkwarden/projects/1).
+`docker-compose.yml` is the shared base (services, ports, volumes) and defaults to pulling the upstream Linkwarden image using `.env`. Two overlays select the environment:
 
-## Community Projects
+**Development** — pulls the upstream image as-is:
 
-Here are some awesome community-maintained projects that are built around Linkwarden, be sure to star all of them!
+```bash
+docker compose up -d
+```
 
-- [My Links](https://apps.apple.com/ca/app/my-links-for-linkwarden/id6504573402) - Native iOS and MacOS App, [source code](https://github.com/JGeek00/my-links).
-- [LinkDroid](https://fossdroid.com/a/linkdroid-for-linkwarden.html) - Android App with share sheet integration, [source code](https://github.com/Dacid99/LinkDroid-for-Linkwarden).
-- [LinkGuardian](https://github.com/Elbullazul/LinkGuardian) - An Android client for Linkwarden. Built with Kotlin and Jetpack compose.
-- [StarWarden](https://github.com/rtuszik/starwarden) - A browser extension to save your starred GitHub repositories to Linkwarden.
-- [link-my-harmony](https://github.com/xiebaiyuan/link-my-harmony) - HarmonyOS Next client for Linkwarden (鸿笺 / Folio), built with ArkTS and ArkUI.
+To instead build and run this repository's local source (heavier — compiles the Rust `monolith` binary and installs headless Chromium):
 
-## Development
+```bash
+yarn docker:build
+# equivalent to: docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build
+```
 
-If you want to contribute, Thanks! Start by choosing one of our [popular suggestions](https://github.com/linkwarden/linkwarden/issues?q=is%3Aissue%20is%3Aopen%20sort%3Areactions-%2B1-desc), just please stay in touch with [@daniel31x13](https://github.com/daniel31x13) before starting.
+**Production** — uses `.env.production` for both container env vars and `${...}` substitution in the compose files, and sets `restart: always`:
 
-# Translations
+```bash
+yarn docker:prod
+# equivalent to: docker compose --env-file .env.production -f docker-compose.yml -f docker-compose.prod.yml up -d
+```
 
-If you want to help us translate Linkwarden to your language, please check out our [Crowdin page](https://crowdin.com/project/linkwarden) and start translating. We would love to have your help!
+`.env.production` should never be committed — keep it local or deploy it out-of-band to the server.
 
-To start translating a new language, please create an issue so we can set it up for you. New languages will be added once they reach at least 50% translation completion.
+## Useful commands
 
-<a href="https://crowdin.com/project/linkwarden">
-<img src="https://badges.crowdin.net/linkwarden/localized.svg" alt="Crowdin" /></a>
+| Command | Purpose |
+| --- | --- |
+| `yarn concurrently:dev` | Run the web app and worker in development mode |
+| `yarn web:dev` | Run only the web app |
+| `yarn worker:dev` | Run only the background worker |
+| `yarn web:build` | Create a production web build |
+| `yarn prisma:generate` | Generate the Prisma client |
+| `yarn prisma:dev` | Apply or create development migrations |
+| `yarn prisma:studio` | Browse the database with Prisma Studio |
+| `yarn test` | Run the test suite |
+| `yarn coverage` | Run tests with coverage |
+| `yarn format` | Format all workspaces |
 
-## Security
+## Project structure
 
-If you found a security vulnerability, please do **not** create a public issue, instead send an email to [security@linkwarden.app](mailto:security@linkwarden.app) stating the vulnerability. Thanks!
+```text
+apps/
+  web/        Next.js web application
+  worker/     Background processing and web preservation
+  mobile/     Mobile application
+  extension/  Browser extension
+packages/
+  prisma/     Database schema, migrations, and generated client
+  router/     Shared application routes
+  lib/        Shared business and infrastructure utilities
+  types/      Shared TypeScript types
+```
 
-## Support <3
+## Upstream
 
-Other than using our official [Cloud](https://linkwarden.app/#pricing) offering, any [donations](https://opencollective.com/linkwarden) are highly appreciated as well!
+LinkPool owes its foundation to Linkwarden and its contributors. When reporting an issue or proposing a change, please first determine whether it is specific to LinkPool or also applies to upstream Linkwarden:
 
-Here are the other ways to support/cheer this project:
+- LinkPool repository: [DMinhPL/linkpool](https://github.com/DMinhPL/linkpool)
+- Linkwarden source: [linkwarden/linkwarden](https://github.com/linkwarden/linkwarden)
+- Linkwarden documentation: [docs.linkwarden.app](https://docs.linkwarden.app)
 
-- Starring this repository.
-- Joining us on [Discord](https://discord.com/invite/CtuYV47nuJ).
-- Referring Linkwarden to a friend.
+Please keep the upstream attribution and license notices intact when redistributing this project.
 
-If you did any of the above, Thanksss! Otherwise thanks.
+## License
 
-## Thanks to All the Contributors 💪
-
-Huge thanks to these guys for spending their time helping Linkwarden grow. They rock! ⚡️
-
-<img src="https://contributors-img.web.app/image?repo=linkwarden/linkwarden" alt="Contributors"/>
+LinkPool is distributed under the [GNU Affero General Public License v3.0](./LICENSE.md), consistent with its Linkwarden foundation.
