@@ -5,6 +5,8 @@ services:
   linkpool:
     env_file: .env.production
     restart: always
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
   meilisearch:
     env_file: .env.production
     restart: always
