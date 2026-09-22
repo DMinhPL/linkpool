@@ -1,7 +1,4 @@
 services:
-  postgres:
-    env_file: .env.production
-    restart: always
   linkpool:
     env_file: .env.production
     restart: always

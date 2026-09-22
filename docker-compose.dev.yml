@@ -1,3 +1,14 @@
 services:
+  postgres:
+    image: postgres:16-alpine
+    env_file: .env
+    restart: unless-stopped
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
   linkpool:
     build: .
+    environment:
+      - DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/postgres
+    depends_on:
+      - postgres
+      - meilisearch
