@@ -19072,9 +19072,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"linkwarden@workspace:.":
+"linkpool@workspace:.":
   version: 0.0.0-use.local
-  resolution: "linkwarden@workspace:."
+  resolution: "linkpool@workspace:."
   dependencies:
     concurrently: "npm:^9.1.2"
     dotenv-cli: "npm:^8.0.0"

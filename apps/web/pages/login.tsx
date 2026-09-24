@@ -267,7 +267,7 @@ export default function Login({
         >
           {displayLoginCredential()}
           {displayLoginExternalButton()}
-          {displayRegistration()}
+          {/* {displayRegistration()} */}
         </div>
       </form>
     </CenteredForm>
