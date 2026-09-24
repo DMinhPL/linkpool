@@ -6,13 +6,13 @@ docker compose \
   --env-file .env.production \
   -f docker-compose.yml \
   -f docker-compose.prod.yml \
-  pull
+  pull --ignore-buildable
 
 docker compose \
   --env-file .env.production \
   -f docker-compose.yml \
   -f docker-compose.prod.yml \
-  up -d
+  up -d --build
 
 docker compose \
   --env-file .env.production \
