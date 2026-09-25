@@ -1,9 +1,17 @@
 services:
   linkpool:
-    env_file: .env.production
-    restart: always
+    image: ghcr.io/dminhpl/linkpool:latest
+
+    env_file:
+      - .env.production
+
     environment:
       DATABASE_URL: ${DATABASE_URL}
+
+    restart: always
+
   meilisearch:
-    env_file: .env.production
+    env_file:
+      - .env.production
+
     restart: always

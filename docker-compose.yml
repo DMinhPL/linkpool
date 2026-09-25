@@ -1,19 +1,19 @@
 services:
   linkpool:
-    env_file: .env
     restart: unless-stopped
-    build: .
-    image: linkpool:latest
+
     ports:
-      - ${URL_PORT}:3000
+      - "${URL_PORT}:3000"
+
     volumes:
       - ./data:/data/data
+
     depends_on:
       - meilisearch
+
   meilisearch:
     image: getmeili/meilisearch:v1.13.3
     restart: unless-stopped
-    env_file:
-      - .env
+
     volumes:
       - ./meili_data:/meili_data
