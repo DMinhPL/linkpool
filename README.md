@@ -82,7 +82,7 @@ Open [http://localhost:3000](http://localhost:3000) and create your first accoun
 
 ### Docker
 
-`docker-compose.yml` is the shared base (services, ports, volumes) and defaults to pulling the upstream Linkwarden image using `.env`. Two overlays select the environment:
+`docker-compose.yml` is the shared base for the web app, Redis, and Meilisearch. For the supported VPS deployment flow, use the GHCR instructions below.
 
 **Development** — pulls the upstream image as-is:
 
@@ -99,12 +99,66 @@ yarn docker:build
 
 **Production** — uses `.env.production` for both container env vars and `${...}` substitution in the compose files, and sets `restart: always`:
 
+> [!NOTE]
+> For VPS production deployments, use the GHCR workflow below. The command in this block is retained only for building or running a locally available image.
+
 ```bash
 yarn docker:prod
 # equivalent to: docker compose --env-file .env.production -f docker-compose.yml -f docker-compose.prod.yml up -d
 ```
 
 `.env.production` should never be committed — keep it local or deploy it out-of-band to the server.
+
+### Recommended production deployment: GHCR + VPS
+
+Build and publish the application image from your local machine, then have the VPS pull that image. The VPS does not need the repository source code or a Docker build toolchain.
+
+#### 1. Build and push from your local machine
+
+Create a GitHub personal access token with the `write:packages` permission, then authenticate Docker once:
+
+```bash
+echo "$GHCR_TOKEN" | docker login ghcr.io -u DMinhPL --password-stdin
+```
+
+Build and push both an immutable Git-based tag and `latest`:
+
+```bash
+IMAGE_TAG=$(git rev-parse --short HEAD)
+docker build \
+  -t ghcr.io/dminhpl/linkpool:$IMAGE_TAG \
+  -t ghcr.io/dminhpl/linkpool:latest \
+  .
+docker push ghcr.io/dminhpl/linkpool:$IMAGE_TAG
+docker push ghcr.io/dminhpl/linkpool:latest
+```
+
+#### 2. Configure the VPS
+
+Copy `docker-compose.yml`, `docker-compose.prod.yml`, `deploy.sh`, and `.env.production` to the VPS. Configure at least:
+
+```env
+DATABASE_URL=postgresql://...
+REDIS_URL=redis://redis:6379
+URL_PORT=3000
+```
+
+`redis` is the private Docker Compose service name. Do not publish port `6379` to the internet.
+
+If the GHCR package is private, log Docker in on the VPS once with a token that has `read:packages`:
+
+```bash
+echo "$GHCR_TOKEN" | docker login ghcr.io -u DMinhPL --password-stdin
+```
+
+#### 3. Pull and run on the VPS
+
+```bash
+chmod +x deploy.sh
+./deploy.sh
+```
+
+`deploy.sh` pulls `ghcr.io/dminhpl/linkpool:latest`, starts the web app, Redis-backed worker, Redis, and Meilisearch, then prints the service status. After publishing an updated local image, run `./deploy.sh` again on the VPS.
 
 ## Useful commands
 
