@@ -3,6 +3,7 @@ import verifyUser from "@/lib/api/verifyUser";
 import { prisma } from "@linkwarden/prisma";
 import { LinkArchiveActionSchema } from "@linkwarden/lib/schemaValidation";
 import { removeFiles } from "@linkwarden/filesystem";
+import { enqueueLinkProcessing } from "@linkwarden/lib/backgroundJobs";
 
 export default async function links(req: NextApiRequest, res: NextApiResponse) {
   const user = await verifyUser({ req, res });
@@ -82,6 +83,7 @@ export default async function links(req: NextApiRequest, res: NextApiResponse) {
             indexVersion: null,
           },
         });
+        await enqueueLinkProcessing();
 
         console.log("Deleted preservation link:", link.id);
       }

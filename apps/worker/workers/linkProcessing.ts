@@ -22,8 +22,13 @@ const launchingMessage = () =>
     ? `Connecting to remote browser (${process.env.PLAYWRIGHT_WS_URL}).`
     : "Launching browser.";
 
-export async function linkProcessing(interval = 10) {
+export async function linkProcessing(interval = 10, runOnce = false) {
   logInfo("Starting link processing...");
+
+  if (runOnce) {
+    await linkProcessingOnDemand(interval, true);
+    return;
+  }
 
   if (BROWSER_LIFECYCLE === "on-demand") {
     await linkProcessingOnDemand(interval);
@@ -109,7 +114,7 @@ async function linkProcessingPersistent(interval: number) {
   }
 }
 
-async function linkProcessingOnDemand(interval: number) {
+async function linkProcessingOnDemand(interval: number, runOnce = false) {
   let browser: Browser | null = null;
   let browserStartTs = 0;
   let lastActivityTs = 0;
@@ -157,6 +162,7 @@ async function linkProcessingOnDemand(interval: number) {
         await closeBrowser();
       }
 
+      if (runOnce) return;
       await delay(interval);
       continue;
     }
@@ -172,6 +178,10 @@ async function linkProcessingOnDemand(interval: number) {
       browserStartTs = 0;
     });
 
+    if (runOnce) {
+      await closeBrowser();
+      return;
+    }
     await delay(interval);
   }
 }

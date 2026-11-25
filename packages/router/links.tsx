@@ -27,7 +27,7 @@ import {
 import type toaster from "react-hot-toast";
 import { TFunction } from "next-i18next";
 
-export const PRESERVATION_POLL_INTERVAL = 5000;
+export const PRESERVATION_POLL_INTERVAL = 15000;
 
 const useLinks = (params: LinkRequestQuery = {}, auth?: MobileAuth) => {
   const sort =

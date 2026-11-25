@@ -10,6 +10,23 @@ services:
 
     restart: always
 
+  worker:
+    image: ghcr.io/dminhpl/linkpool:latest
+
+    env_file:
+      - .env.production
+
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+
+    command: sh -c "export PATH=/data/node_modules/.bin:$PATH && prisma migrate deploy --schema=/data/packages/prisma/schema.prisma && cd /data/apps/worker && exec tsx worker.ts"
+
+    restart: always
+
+    depends_on:
+      - meilisearch
+      - redis
+
   meilisearch:
     env_file:
       - .env.production

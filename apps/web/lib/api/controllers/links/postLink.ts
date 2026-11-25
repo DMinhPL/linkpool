@@ -8,6 +8,7 @@ import {
 } from "@linkwarden/lib/schemaValidation";
 import { hasPassedLimit } from "@linkwarden/lib/verifyCapacity";
 import { isUrlSafeForServerSideFetch } from "@linkwarden/lib/ssrf";
+import { enqueueLinkProcessing } from "@linkwarden/lib/backgroundJobs";
 
 export default async function postLink(
   body: PostLinkSchemaType,
@@ -162,6 +163,14 @@ export default async function postLink(
   });
 
   createFolder({ filePath: `archives/${newLink.collectionId}` });
+
+  // Queue background work only after the write is committed. Redis is local to
+  // the Compose stack, so this does not wake the cloud database while idle.
+  if (shouldPreserveUrl) {
+    await enqueueLinkProcessing().catch((error) => {
+      console.error("Failed to enqueue link processing:", error);
+    });
+  }
 
   return { response: newLink, status: 200 };
 }

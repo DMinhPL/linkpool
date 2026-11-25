@@ -10,6 +10,15 @@ services:
 
     depends_on:
       - meilisearch
+      - redis
+
+  redis:
+    image: redis:7.4-alpine
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+
+    volumes:
+      - ./redis_data:/data
 
   meilisearch:
     image: getmeili/meilisearch:v1.13.3

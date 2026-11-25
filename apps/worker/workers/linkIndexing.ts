@@ -60,7 +60,7 @@ async function setupLinksIndexSchema() {
   // if (process.env.NODE_ENV !== "production") await clearIndexes(); // For development/debugging purposes ONLY! This function clears all the indexes and you'll have to reindex everything...
 }
 
-export async function startIndexing(interval = 10) {
+export async function startIndexing(interval = 10, runOnce = false) {
   if (!meiliClient) return;
 
   await setupLinksIndexSchema();
@@ -126,6 +126,7 @@ export async function startIndexing(interval = 10) {
     });
 
     if (links.length === 0) {
+      if (runOnce) return;
       await delay(interval);
       continue;
     }
@@ -174,6 +175,7 @@ export async function startIndexing(interval = 10) {
       }, ${indexesLeft} left.`
     );
 
+    if (runOnce) return;
     await delay(interval);
   }
 }

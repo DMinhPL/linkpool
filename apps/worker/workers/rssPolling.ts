@@ -13,7 +13,7 @@ const REQUIRE_CC = process.env.NEXT_PUBLIC_REQUIRE_CC === "true";
 
 const feedTimeoutInMs = 30_000;
 
-export async function startRSSPolling() {
+export async function startRSSPolling(runOnce = false) {
   console.log("\x1b[34m%s\x1b[0m", "Starting RSS polling...");
   while (true) {
     const rssSubscriptions = await prisma.rssSubscription.findMany({
@@ -71,6 +71,7 @@ export async function startRSSPolling() {
         }
       })
     );
+    if (runOnce) return;
     await delay(pollingIntervalInSeconds);
   }
 }

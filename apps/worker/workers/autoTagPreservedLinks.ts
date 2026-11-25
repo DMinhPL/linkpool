@@ -16,7 +16,7 @@ const hasAiTaggingProvider = () =>
       process.env.PERPLEXITY_API_KEY
   );
 
-export async function autoTagPreservedLinks(interval = 10) {
+export async function autoTagPreservedLinks(interval = 10, runOnce = false) {
   if (!hasAiTaggingProvider()) return;
 
   console.log("\x1b[34m%s\x1b[0m", "Starting link auto-tagging...");
@@ -28,6 +28,7 @@ export async function autoTagPreservedLinks(interval = 10) {
     });
 
     if (links.length === 0) {
+      if (runOnce) return;
       await delay(interval);
       continue;
     }
@@ -70,6 +71,7 @@ export async function autoTagPreservedLinks(interval = 10) {
     );
 
     await Promise.allSettled(autoTagPromises);
+    if (runOnce) return;
     await delay(interval);
   }
 }

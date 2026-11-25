@@ -2,7 +2,7 @@
 # Stage 1: Monolith Builder
 # ==============================================================================
 FROM docker.io/rust:1.96-bookworm AS monolith-builder
-ARG MONOLITH_VERSION=2.10.1
+ARG MONOLITH_VERSION=2.11.5
 RUN set -eux && cargo install --locked monolith@${MONOLITH_VERSION}
 
 # ==============================================================================
@@ -92,8 +92,8 @@ HEALTHCHECK --interval=30s \
             --timeout=5s \
             --start-period=10s \
             --retries=3 \
-            CMD [ "/usr/bin/curl", "--silent", "--fail", "http://127.0.0.1:3000/" ]
+            CMD [ "/usr/bin/curl", "--silent", "--fail", "http://127.0.0.1:3000/api/health" ]
 
 EXPOSE 3000
 
-CMD ["sh", "-c", "export PATH=/data/node_modules/.bin:$PATH && prisma migrate deploy --schema=/data/packages/prisma/schema.prisma && exec concurrently -k -n web,worker \"cd /data/apps/web && exec next start\" \"cd /data/apps/worker && exec tsx worker.ts\""]
+CMD ["sh", "-c", "export PATH=/data/node_modules/.bin:$PATH && prisma migrate deploy --schema=/data/packages/prisma/schema.prisma && cd /data/apps/web && exec next start"]

@@ -25,8 +25,29 @@ services:
 
     depends_on:
       - postgres
-      - meilisearch
+      # - meilisearch
+      - redis
 
-  meilisearch:
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    image: linkpool:dev
+
     env_file:
       - .env
+
+    environment:
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/postgres
+
+    command: sh -c "export PATH=/data/node_modules/.bin:$PATH && prisma migrate deploy --schema=/data/packages/prisma/schema.prisma && cd /data/apps/worker && exec tsx worker.ts"
+
+    depends_on:
+      - postgres
+      # - meilisearch
+      - redis
+
+  # meilisearch:
+  #   env_file:
+  #     - .env
